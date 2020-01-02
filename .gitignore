@@ -10,4 +10,5 @@ test.c
 test
 *.sublime-*
 unit_tests
+bootstrap.c
 my_ls
