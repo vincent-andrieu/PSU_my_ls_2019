@@ -5,7 +5,6 @@
 ** recode ls
 */
 
-#include <stdlib.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/sysmacros.h>
@@ -15,6 +14,9 @@
 static char *cat_file_to_path(char *path, char *name)
 {
     char *filepath = my_strndup(path, my_strlen(path) + my_strlen(name) + 1);
+
+    if (filepath == NULL)
+        exit(EXIT_ERROR);
     my_strcat(filepath, "/");
     my_strcat(filepath, name);
     return filepath;
@@ -39,16 +41,15 @@ static char get_file_type(struct stat st)
     return 0;
 }
 
-static int list_files(char *path)
+static void list_files(char *path)
 {
-    int nbr = 0;
     DIR *dir = opendir(path);
     struct dirent *d_file = dir != NULL ? readdir(dir) : NULL;
     struct stat st;
     char *filepath;
 
     if (dir == NULL || d_file == NULL)
-        return EXIT_ERROR;
+        exit(EXIT_ERROR);
     while (d_file != NULL) {
         if (my_strcmp(d_file->d_name, ".") && my_strcmp(d_file->d_name, "..")) {
             filepath = cat_file_to_path(path, d_file->d_name);
@@ -64,18 +65,17 @@ static int list_files(char *path)
             printf("Owner's UID : %d\n", st.st_uid);
             printf("Owner's GID : %d\n", st.st_gid);
             printf("\n");
+            free(filepath);
         }
         d_file = readdir(dir);
     }
     closedir(dir);
-    return nbr;
 }
 
 int main(int argc, char **argv)
 {
+    options_t *options = get_flags(argc, argv);
 
-    if (argc != 2)
-        return EXIT_ERROR;
     list_files(argv[1]);
     return EXIT_SUCCESS;
 }

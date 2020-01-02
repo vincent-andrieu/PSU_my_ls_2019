@@ -5,7 +5,8 @@
 ## project makefile
 ##
 
-SRC =   src/main.c
+SRC =   src/main.c	\
+		src/flags.c
 
 OBJ =   $(SRC:.c=.o)
 
