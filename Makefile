@@ -6,7 +6,8 @@
 ##
 
 SRC =   src/main.c	\
-		src/flags.c
+		src/get_flags.c	\
+		src/flag_l.c
 
 OBJ =   $(SRC:.c=.o)
 
