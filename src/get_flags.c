@@ -18,13 +18,14 @@ static options_t *initialize_flags(void)
     options->d = false;
     options->r = false;
     options->t = false;
+    options->a = false;
     return options;
 }
 
 static void check_is_flag(char flag)
 {
     int i = 0;
-    char *opt_list = "lRdrt";
+    char *opt_list = "lRdrta";
 
     for (; opt_list[i] != flag && opt_list[i] != '\0'; i++);
     if (opt_list[i] == '\0')
@@ -43,6 +44,8 @@ static void toggle_flag(options_t *options, char flag)
         options->r = true;
     if (flag == 't')
         options->t = true;
+    if (flag == 'a')
+        options->a = true;
 }
 
 options_t *get_flags(int argc, char **argv)

@@ -7,7 +7,9 @@
 
 SRC =   src/main.c	\
 		src/get_flags.c	\
-		src/flag_l.c
+		src/get_files.c	\
+		src/flag_l/flag_l.c	\
+		src/flag_l/put_flag_l.c
 
 OBJ =   $(SRC:.c=.o)
 

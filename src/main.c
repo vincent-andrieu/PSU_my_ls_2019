@@ -23,8 +23,7 @@ int main(int argc, char **argv)
 
     argv++;
     argc--;
-    for (; i <= argc && argv[0][0] == '-'; i++, argv++)
-        printf("%d %d\n", i, argc);
+    for (; i <= argc && argv[0][0] == '-'; i++, argv++);
     if (i > argc) {
         argv--;
         argc = 1;
@@ -33,5 +32,6 @@ int main(int argc, char **argv)
     } else
         argc -= i;
     do_flags(options, argv, argc);
+    free(options);
     return EXIT_SUCCESS;
 }

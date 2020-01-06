@@ -2,15 +2,13 @@
 ** EPITECH PROJECT, 2019
 ** my_ls
 ** File description:
-** flag l
+** put flag l details
 */
 
-#include <dirent.h>
 #include <time.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
-#include <sys/sysmacros.h>
 #include "my.h"
 #include "my_ls.h"
 
@@ -65,43 +63,34 @@ static void put_month(struct stat st)
     my_putchar(' ');
 }
 
-static void put_details(struct stat st, char *filename)
+void put_details(file_t *files, int sp_nlinks, int sp_size)
 {
-    my_putchar(get_file_type(st));
-    put_file_permissions(st);
-    my_put_nbr(st.st_nlink);
+    my_putchar(get_file_type(files->st));
+    put_file_permissions(files->st);
+    for (int i = 0; i < sp_nlinks - get_num_nbr(files->st.st_nlink); i++)
+        my_putchar(' ');
+    my_put_nbr(files->st.st_nlink);
     my_putchar(' ');
-    my_putstr(getpwuid(st.st_uid)->pw_name);
+    my_putstr(getpwuid(files->st.st_uid)->pw_name);
     my_putchar(' ');
-    my_putstr(getgrgid(st.st_gid)->gr_name);
-    my_putchar('\t');
-    my_put_nbr(st.st_size);
-    my_putchar('\t');
-    put_month(st);
-    my_putstr(filename);
+    my_putstr(getgrgid(files->st.st_gid)->gr_name);
+    my_putchar(' ');
+    for (int i = 0; i < sp_size - get_num_nbr(files->st.st_size); i++)
+        my_putchar(' ');
+    my_put_nbr(files->st.st_size);
+    my_putchar(' ');
+    put_month(files->st);
+    my_putstr(files->name);
     my_putchar('\n');
 }
 
-void flag_l(options_t *options, char **argv, int argc)
+void put_total_l(file_t *files)
 {
-    DIR *dir = opendir(argv[0]);
-    struct dirent *d_file = dir != NULL ? readdir(dir) : NULL;
-    struct stat st;
-    char *filepath;
+    int total = 0;
 
-    if (dir == NULL || d_file == NULL)
-        exit(EXIT_ERROR);
-    while (d_file != NULL) {
-        if (d_file->d_name[0] != '.') {
-            filepath = my_strndup(argv[0], my_strlen(argv[0])
-                        + my_strlen(d_file->d_name) + 1);
-            my_strcat(filepath, "/");
-            my_strcat(filepath, name);
-            lstat(filepath, &st);
-            free(filepath);
-            put_details(st, d_file->d_name);
-        }
-        d_file = readdir(dir);
-    }
-    closedir(dir);
+    for (; files != NULL; files = files->next)
+        total += files->st.st_blocks / 2;
+    my_putstr("total ");
+    my_put_nbr(total);
+    my_putchar('\n');
 }
