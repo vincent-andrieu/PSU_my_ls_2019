@@ -24,9 +24,27 @@ static void basic_ls(options_t *options, char *argv)
     my_putchar('\n');
 }
 
+static void flag_d(options_t *options, char **argv, int argc)
+{
+    bool first = true;
+
+    for (int i = options->r ? argc : 0; options->r ? i >= 0 : i <= argc;
+    i += options->r ? -1 : 1) {
+        if (!first)
+            my_putstr("  ");
+        first = false;
+        my_putstr(argv[i]);
+    }
+    my_putchar('\n');
+}
+
 static void do_flags(options_t *options, char **argv, int argc,
                     bool multi_files)
 {
+    if (options->d) {
+        flag_d(options, argv, argc);
+        return;
+    }
     if (multi_files) {
         my_putstr(argv[options->r ? argc : 0]);
         my_putstr(":\n");
