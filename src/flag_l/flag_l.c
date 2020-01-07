@@ -52,7 +52,7 @@ static void free_files(file_t *file)
 
 void flag_l(options_t *options, char **argv, int argc)
 {
-    file_t *files = get_files(argv[0], options->a);
+    file_t *files = get_files(argv[0], options);
     file_t *first_file = files;
     int sp_nlinks = get_sp_nlinks(files);
     int sp_size = get_sp_size(files);

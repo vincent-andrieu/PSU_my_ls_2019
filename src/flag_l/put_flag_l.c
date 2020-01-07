@@ -50,7 +50,6 @@ static void put_month(struct stat st)
     int i = 0;
     char *date;
 
-    time(&st.st_mtime);
     date = ctime(&st.st_mtime);
     for (; date[0] != ' ' && date[0] != '\0'; date++);
     if (date[0] == '\0')
