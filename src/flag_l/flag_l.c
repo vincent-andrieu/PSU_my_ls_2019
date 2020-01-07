@@ -7,6 +7,7 @@
 
 #include <dirent.h>
 #include <sys/sysmacros.h>
+#include "my.h"
 #include "my_ls.h"
 
 int get_num_nbr(int nbr)
@@ -41,18 +42,9 @@ static int get_sp_size(file_t *files)
     return spaces;
 }
 
-static void free_files(file_t *file)
+void flag_l(options_t *options, char *argv)
 {
-    if (file == NULL)
-        return;
-    free_files(file->next);
-    free(file->name);
-    free(file);
-}
-
-void flag_l(options_t *options, char **argv, int argc)
-{
-    file_t *files = get_files(argv[0], options);
+    file_t *files = get_files(argv, options);
     file_t *first_file = files;
     int sp_nlinks = get_sp_nlinks(files);
     int sp_size = get_sp_size(files);
