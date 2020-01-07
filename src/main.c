@@ -10,36 +10,7 @@
 #include "my.h"
 #include "my_ls.h"
 
-static void basic_ls(options_t *options, char *argv)
-{
-    file_t *files = get_files(argv, options);
-    file_t *first_files = files;
-
-    for (; files != NULL; files = files->next) {
-        if (files != first_files)
-            my_putstr("  ");
-        my_putstr(files->name);
-    }
-    free_files(first_files);
-    my_putchar('\n');
-}
-
-static void flag_d(options_t *options, char **argv, int argc)
-{
-    bool first = true;
-
-    for (int i = options->r ? argc : 0; options->r ? i >= 0 : i <= argc;
-    i += options->r ? -1 : 1) {
-        if (!first)
-            my_putstr("  ");
-        first = false;
-        my_putstr(argv[i]);
-    }
-    my_putchar('\n');
-}
-
-static void do_flags(options_t *options, char **argv, int argc,
-                    bool multi_files)
+void do_flags(options_t *options, char **argv, int argc, bool multi_files)
 {
     if (options->d) {
         flag_d(options, argv, argc);
@@ -49,10 +20,10 @@ static void do_flags(options_t *options, char **argv, int argc,
         my_putstr(argv[options->r ? argc : 0]);
         my_putstr(":\n");
     }
-    if (options->l)
+    if (options->R)
+        flag_ur(options, argv);
+    else if (options->l)
         flag_l(options, argv[options->r ? argc : 0]);
-    else if (options->R)
-        my_putchar('#');
     else
         basic_ls(options, argv[options->r ? argc : 0]);
     if (argc > 0) {

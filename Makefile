@@ -9,6 +9,7 @@ SRC =   src/main.c	\
 		src/get_flags.c	\
 		src/get_files.c	\
 		src/sort_files.c	\
+		src/flags.c	\
 		src/flag_l/flag_l.c	\
 		src/flag_l/put_flag_l.c
 

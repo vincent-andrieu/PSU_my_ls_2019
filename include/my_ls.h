@@ -32,13 +32,18 @@ typedef struct file_s
 } file_t;
 
 options_t *get_flags(int argc, char **argv);
-void flag_l(options_t *options, char *argv);
+void do_flags(options_t *options, char **argv, int argc, bool multi_files);
 file_t *get_files(char *path, options_t *options);
+void flag_l(options_t *options, char *argv);
 void put_total_l(file_t *files);
 void put_details(file_t *files, int sp_nlinks, int sp_size);
 int get_num_nbr(int nbr);
 file_t *sort_alpha_files(file_t *first, file_t *files, file_t *last);
 file_t *my_rev_list(file_t *first, file_t *files, file_t *prev);
 void free_files(file_t *file);
+void basic_ls(options_t *options, char *argv);
+void flag_d(options_t *options, char **argv, int argc);
+void flag_ur(options_t *options, char **paths);
+char *get_filepath(char *path, char *name);
 
 #endif

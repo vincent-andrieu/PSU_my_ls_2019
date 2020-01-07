@@ -5,7 +5,6 @@
 ** sort files
 */
 
-#include <stdbool.h>
 #include "my.h"
 #include "my_ls.h"
 

@@ -12,10 +12,8 @@
 static struct stat get_filepath_stats(char *path, char *name)
 {
     struct stat st;
-    char *filepath = my_strndup(path, my_strlen(path) + my_strlen(name) + 1);
+    char *filepath = get_filepath(path, name);
 
-    my_strcat(filepath, "/");
-    my_strcat(filepath, name);
     lstat(filepath, &st);
     free(filepath);
     return st;
@@ -36,6 +34,15 @@ static file_t *fill_file(char *path, char *name, file_t *next,
         return file;
     }
     return next;
+}
+
+char *get_filepath(char *path, char *name)
+{
+    char *filepath = my_strndup(path, my_strlen(path) + my_strlen(name) + 1);
+
+    my_strcat(filepath, "/");
+    my_strcat(filepath, name);
+    return filepath;
 }
 
 file_t *get_files(char *path, options_t *options)
