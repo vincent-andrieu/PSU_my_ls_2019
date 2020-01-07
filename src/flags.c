@@ -8,6 +8,29 @@
 #include "my.h"
 #include "my_ls.h"
 
+static bool is_time_sorted(file_t *files)
+{
+    if (files == NULL || files->next == NULL)
+        return true;
+    if (files->st.st_mtime < files->next->st.st_mtime)
+        return false;
+    return is_time_sorted(files->next);
+}
+
+file_t *sort_time(file_t *first, file_t *files, file_t *last)
+{
+    if (files == NULL)
+        return sort_time(first, first, NULL);
+    if (is_time_sorted(first))
+        return first;
+    if (files->st.st_mtime < files->next->st.st_mtime) {
+        files = swap_files(files, last);
+        first = last == NULL ? files : first;
+        return sort_time(first, first, NULL);
+    }
+    return sort_time(first, files->next, files);
+}
+
 void basic_ls(options_t *options, char *argv)
 {
     file_t *files = get_files(argv, options);

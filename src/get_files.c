@@ -58,7 +58,10 @@ file_t *get_files(char *path, options_t *options)
         d_file = readdir(dir);
     }
     closedir(dir);
-    files = sort_alpha_files(files, files, NULL);
+    if (options->t)
+        files = sort_time(files, files, NULL);
+    else
+        files = sort_alpha_files(files, files, NULL);
     if (options->r)
         files = my_rev_list(files, files, NULL);
     return files;

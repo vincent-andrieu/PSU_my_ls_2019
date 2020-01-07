@@ -45,5 +45,7 @@ void basic_ls(options_t *options, char *argv);
 void flag_d(options_t *options, char **argv, int argc);
 void flag_ur(options_t *options, char **paths);
 char *get_filepath(char *path, char *name);
+file_t *swap_files(file_t *files, file_t *last);
+file_t *sort_time(file_t *first, file_t *files, file_t *last);
 
 #endif

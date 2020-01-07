@@ -8,20 +8,6 @@
 #include "my.h"
 #include "my_ls.h"
 
-static file_t *swap_files(file_t *files, file_t *last)
-{
-    struct file_s *temp;
-
-    if (last != NULL)
-        last->next = files->next;
-    last = files->next;
-    temp = files->next->next;
-    files->next->next = files;
-    files->next = temp;
-    files = last;
-    return files;
-}
-
 static bool is_alpha_sorted(file_t *files)
 {
     if (files == NULL)
@@ -33,6 +19,20 @@ static bool is_alpha_sorted(file_t *files)
     if (files->next == NULL)
         return true;
     return is_alpha_sorted(files->next);
+}
+
+file_t *swap_files(file_t *files, file_t *last)
+{
+    struct file_s *temp;
+
+    if (last != NULL)
+        last->next = files->next;
+    last = files->next;
+    temp = files->next->next;
+    files->next->next = files;
+    files->next = temp;
+    files = last;
+    return files;
 }
 
 file_t *sort_alpha_files(file_t *first, file_t *files, file_t *last)
