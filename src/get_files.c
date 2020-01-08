@@ -13,9 +13,14 @@ static struct stat get_filepath_stats(char *path, char *name)
 {
     struct stat st;
     char *filepath = get_filepath(path, name);
+    int error;
 
-    lstat(filepath, &st);
+    if (filepath == NULL)
+        exit(EXIT_ERROR);
+    error = lstat(filepath, &st);
     free(filepath);
+    if (error == -1)
+        exit(EXIT_ERROR);
     return st;
 }
 
@@ -27,9 +32,11 @@ static file_t *fill_file(char *path, char *name, file_t *next,
     if (name[0] != '.' || get_allfiles) {
         file = malloc(sizeof(file_t));
         if (file == NULL)
-            exit(EXIT_ERROR);
+            return NULL;
         file->name = my_strdup(name);
         file->st = get_filepath_stats(path, name);
+        if (file->name == NULL)
+            return NULL;
         file->next = next;
         return file;
     }
@@ -40,6 +47,8 @@ char *get_filepath(char *path, char *name)
 {
     char *filepath = my_strndup(path, my_strlen(path) + my_strlen(name) + 1);
 
+    if (filepath == NULL)
+        return NULL;
     my_strcat(filepath, "/");
     my_strcat(filepath, name);
     return filepath;
@@ -52,7 +61,7 @@ file_t *get_files(char *path, options_t *options)
     file_t *files = NULL;
 
     if (dir == NULL || d_file == NULL)
-        exit(EXIT_ERROR);
+        return NULL;
     while (d_file != NULL) {
         files = fill_file(path, d_file->d_name, files, options->a);
         d_file = readdir(dir);

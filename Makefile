@@ -6,6 +6,7 @@
 ##
 
 SRC =   src/main.c	\
+		src/my_ls.c	\
 		src/get_flags.c	\
 		src/get_files.c	\
 		src/sort_files.c	\

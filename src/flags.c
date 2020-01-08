@@ -36,6 +36,8 @@ void basic_ls(options_t *options, char *argv)
     file_t *files = get_files(argv, options);
     file_t *first_files = files;
 
+    if (files == NULL)
+        exit(EXIT_ERROR);
     for (; files != NULL; files = files->next) {
         if (files != first_files)
             my_putstr("  ");
@@ -64,6 +66,8 @@ void flag_ur(options_t *options, char **paths)
     file_t *files = get_files(paths[0], options);
     file_t *first = files;
 
+    if (files == NULL)
+        exit(EXIT_ERROR);
     my_putstr(paths[0]);
     my_putstr(":\n");
     options->R = false;

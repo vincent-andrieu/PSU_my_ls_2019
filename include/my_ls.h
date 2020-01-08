@@ -31,6 +31,7 @@ typedef struct file_s
     struct file_s *next;
 } file_t;
 
+int my_ls(int argc, char **argv);
 options_t *get_flags(int argc, char **argv);
 void do_flags(options_t *options, char **argv, int argc, bool multi_files);
 file_t *get_files(char *path, options_t *options);
