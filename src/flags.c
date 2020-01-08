@@ -67,9 +67,9 @@ void flag_ur(options_t *options, char **paths)
     file_t *first = files;
 
     if (files == NULL)
-        exit(EXIT_ERROR);
-    my_putstr(paths[0]);
-    my_putstr(":\n");
+        return;
+    if (!my_strcmp(paths[0], "."))
+        my_putstr(".:\n");
     options->R = false;
     do_flags(options, paths, 0, false);
     options->R = true;
@@ -77,6 +77,8 @@ void flag_ur(options_t *options, char **paths)
         if (S_ISDIR(files->st.st_mode)) {
             filepath[0] = get_filepath(paths[0], files->name);
             my_putchar('\n');
+            my_putstr(filepath[0]);
+            my_putstr(":\n");
             flag_ur(options, filepath);
             free(filepath[0]);
         }

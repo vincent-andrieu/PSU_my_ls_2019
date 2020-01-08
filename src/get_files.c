@@ -67,6 +67,8 @@ file_t *get_files(char *path, options_t *options)
         d_file = readdir(dir);
     }
     closedir(dir);
+    if (files == NULL)
+        return NULL;
     if (options->t)
         files = sort_time(files, files, NULL);
     else

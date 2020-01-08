@@ -12,7 +12,7 @@ static options_t *initialize_flags(void)
     options_t *options = malloc(sizeof(options_t));
 
     if (options == NULL)
-        exit(EXIT_ERROR);
+        return NULL;
     options->l = false;
     options->R = false;
     options->d = false;
@@ -22,14 +22,15 @@ static options_t *initialize_flags(void)
     return options;
 }
 
-static void check_is_flag(char flag)
+static bool check_is_flag(char flag)
 {
     int i = 0;
     char *opt_list = "lRdrta";
 
     for (; opt_list[i] != flag && opt_list[i] != '\0'; i++);
     if (opt_list[i] == '\0')
-        exit(EXIT_ERROR);
+        return false;
+    return true;
 }
 
 static void toggle_flag(options_t *options, char flag)
@@ -52,13 +53,19 @@ options_t *get_flags(int argc, char **argv)
 {
     int i = 1;
     options_t *options = initialize_flags();
+    int error = EXIT_SUCCESS;
 
+    if (options == NULL)
+        return NULL;
     if (argc <= 1)
         return options;
-    for (; i < argc && argv[i][0] == '-'; i++)
+    for (; i < argc && argv[i][0] == '-'; i++) {
         for (int k = 1; argv[i][k] != '\0'; k++) {
-            check_is_flag(argv[i][k]);
+            error = check_is_flag(argv[i][k]);
             toggle_flag(options, argv[i][k]);
         }
+        if (error == false)
+            return NULL;
+    }
     return options;
 }

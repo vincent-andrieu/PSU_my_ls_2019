@@ -47,6 +47,8 @@ int my_ls(int argc, char **argv)
     int i = 1;
     options_t *options = get_flags(argc, argv);
 
+    if (options == NULL)
+        return EXIT_ERROR;
     argv++;
     argc--;
     for (; i <= argc && argv[0][0] == '-'; i++, argv++);

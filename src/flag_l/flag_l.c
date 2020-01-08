@@ -15,8 +15,7 @@ int get_num_nbr(int nbr)
     int n = 1;
 
     nbr = nbr < 0 ? -nbr : nbr;
-    for (int dix = 10; dix <= nbr && n < 10; n++)
-        dix *= 10;
+    for (int dix = 10; dix <= nbr && n < 10; n++, dix *= 10);
     return n;
 }
 
