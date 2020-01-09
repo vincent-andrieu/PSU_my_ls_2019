@@ -41,8 +41,12 @@ static void put_file_permissions(struct stat st)
     my_putchar((st.st_mode & S_IXGRP) ? 'x' : '-');
     my_putchar((st.st_mode & S_IROTH) ? 'r' : '-');
     my_putchar((st.st_mode & S_IWOTH) ? 'w' : '-');
-    my_putchar((st.st_mode & S_ISVTX) ? 'T'
-                : (st.st_mode & S_IXOTH) ? 'x' : '-');
+    if ((st.st_mode & S_ISVTX) && !(st.st_mode & S_IXOTH))
+        my_putchar('T');
+    else if ((st.st_mode & S_ISVTX) && (st.st_mode & S_IXOTH))
+        my_putchar('t');
+    else
+        my_putchar((st.st_mode & S_IXOTH) ? 'x' : '-');
     my_putstr(". ");
 }
 
