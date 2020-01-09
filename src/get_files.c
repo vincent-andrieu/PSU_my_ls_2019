@@ -29,7 +29,7 @@ static file_t *fill_file(char *path, char *name, file_t *next,
 {
     file_t *file;
 
-    if (name[0] != '.' || get_allfiles) {
+    if (path != NULL && name != NULL && (name[0] != '.' || get_allfiles)) {
         file = malloc(sizeof(file_t));
         if (file == NULL)
             return NULL;
@@ -54,6 +54,17 @@ char *get_filepath(char *path, char *name)
     return filepath;
 }
 
+static file_t *check_one_file(char *path, bool get_allfiles)
+{
+    char *name = NULL;
+    int i = my_strlen(path);
+
+    for (; path != NULL && i >= 0 && path[i] != '/'; i--);
+    name = path + i + 1;
+    path[i] = '\0';
+    return fill_file(path, name, NULL, get_allfiles);
+}
+
 file_t *get_files(char *path, options_t *options)
 {
     DIR *dir = opendir(path);
@@ -61,7 +72,7 @@ file_t *get_files(char *path, options_t *options)
     file_t *files = NULL;
 
     if (dir == NULL || d_file == NULL)
-        return NULL;
+        return check_one_file(path, options->a);
     while (d_file != NULL) {
         files = fill_file(path, d_file->d_name, files, options->a);
         d_file = readdir(dir);
