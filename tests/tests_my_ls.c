@@ -111,13 +111,14 @@ Test(my_ls, test_ls_flag_l_ur_r_t)
 
 Test(my_ls, test_ls_flag_l_dev_folders)
 {
-    char **argv = malloc(sizeof(char) * 4);
+    char **argv = malloc(sizeof(char) * 5);
 
     if (argv != NULL) {
         argv[0] = my_strdup("./my_ls");
         argv[1] = my_strdup("-lR");
         argv[2] = my_strdup("/dev/v4l");
         argv[3] = my_strdup("/dev/vcs");
-        cr_assert_eq(my_ls(4, argv), EXIT_SUCCESS);
+        argv[4] = my_strdup("/dev/tty");
+        cr_assert_eq(my_ls(5, argv), EXIT_SUCCESS);
     }
 }
