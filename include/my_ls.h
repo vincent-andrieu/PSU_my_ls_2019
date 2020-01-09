@@ -17,7 +17,7 @@
 typedef struct options_s
 {
     bool l;
-    bool R;
+    bool ur;
     bool d;
     bool r;
     bool t;
