@@ -10,6 +10,16 @@
 #include "my.h"
 #include "my_ls.h"
 
+static void multi_files_recursive(int argc, options_t *options, char **argv,
+                                bool multi_files)
+{
+    if (argc > 0) {
+        my_putchar('\n');
+        argv += !options->r;
+        do_flags(options, argv, --argc, multi_files);
+    }
+}
+
 void do_flags(options_t *options, char **argv, int argc, bool multi_files)
 {
     if (options->d) {
@@ -26,11 +36,7 @@ void do_flags(options_t *options, char **argv, int argc, bool multi_files)
         flag_l(options, argv[options->r ? argc : 0]);
     else
         basic_ls(options, argv[options->r ? argc : 0]);
-    if (argc > 0) {
-        my_putchar('\n');
-        argv += !options->r;
-        do_flags(options, argv, --argc, multi_files);
-    }
+    multi_files_recursive(argc, options, argv, multi_files);
 }
 
 void free_files(file_t *file)
