@@ -68,9 +68,9 @@ void flag_ur(options_t *options, char **paths)
 
     if (!my_strcmp(paths[0], "."))
         my_putstr(".:\n");
-    options->R = false;
+    options->ur = false;
     do_flags(options, paths, 0, false);
-    options->R = true;
+    options->ur = true;
     for (char *filepath[1]; files != NULL; files = files->next)
         if (S_ISDIR(files->st.st_mode)
         && my_strcmp(files->name, ".") && my_strcmp(files->name, "..")) {

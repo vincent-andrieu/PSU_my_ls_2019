@@ -14,7 +14,7 @@ static options_t *initialize_flags(void)
     if (options == NULL)
         return NULL;
     options->l = false;
-    options->R = false;
+    options->ur = false;
     options->d = false;
     options->r = false;
     options->t = false;
@@ -38,7 +38,7 @@ static void toggle_flag(options_t *options, char flag)
     if (flag == 'l')
         options->l = true;
     if (flag == 'R')
-        options->R = true;
+        options->ur = true;
     if (flag == 'd')
         options->d = true;
     if (flag == 'r')

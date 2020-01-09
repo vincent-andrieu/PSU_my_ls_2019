@@ -20,7 +20,7 @@ void do_flags(options_t *options, char **argv, int argc, bool multi_files)
         my_putstr(argv[options->r ? argc : 0]);
         my_putstr(":\n");
     }
-    if (options->R)
+    if (options->ur)
         flag_ur(options, argv);
     else if (options->l)
         flag_l(options, argv[options->r ? argc : 0]);
