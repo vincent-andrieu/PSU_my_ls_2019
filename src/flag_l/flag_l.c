@@ -47,7 +47,7 @@ void put_total_l(char *path, file_t *files)
     struct stat st;
 
     lstat(path, &st);
-    if (!S_ISDIR(st.st_mode))
+    if (!S_ISDIR(st.st_mode) || files == NULL)
         return;
     for (; files != NULL; files = files->next)
         total += files->st.st_blocks / 2;
