@@ -84,10 +84,14 @@ void put_details(file_t *files, int sp_nlinks, int sp_size)
     my_putchar('\n');
 }
 
-void put_total_l(file_t *files)
+void put_total_l(char *path, file_t *files)
 {
     int total = 0;
+    struct stat st;
 
+    lstat(path, &st);
+    if (!S_ISDIR(st.st_mode))
+        return;
     for (; files != NULL; files = files->next)
         total += files->st.st_blocks / 2;
     my_putstr("total ");

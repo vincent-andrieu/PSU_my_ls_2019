@@ -36,7 +36,7 @@ options_t *get_flags(int argc, char **argv);
 void do_flags(options_t *options, char **argv, int argc, bool multi_files);
 file_t *get_files(char *path, options_t *options);
 void flag_l(options_t *options, char *argv);
-void put_total_l(file_t *files);
+void put_total_l(char *path, file_t *files);
 void put_details(file_t *files, int sp_nlinks, int sp_size);
 int get_num_nbr(int nbr);
 file_t *my_rev_list(file_t *first, file_t *files, file_t *prev);

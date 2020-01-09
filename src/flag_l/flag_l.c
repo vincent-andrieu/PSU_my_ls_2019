@@ -43,12 +43,14 @@ static int get_sp_size(file_t *files)
 
 void flag_l(options_t *options, char *argv)
 {
+    char *path = my_strdup(argv);
     file_t *files = get_files(argv, options);
     file_t *first_file = files;
     int sp_nlinks = get_sp_nlinks(files);
     int sp_size = get_sp_size(files);
 
-    put_total_l(files);
+    put_total_l(path, files);
+    free(path);
     for (; files != NULL; files = files->next)
         put_details(files, sp_nlinks, sp_size);
     free_files(first_file);
