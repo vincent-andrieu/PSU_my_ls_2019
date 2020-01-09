@@ -34,6 +34,7 @@ typedef struct file_s
 int my_ls(int argc, char **argv);
 options_t *get_flags(int argc, char **argv);
 void do_flags(options_t *options, char **argv, int argc, bool multi_files);
+file_t *check_permissions(file_t *file);
 file_t *get_files(char *path, options_t *options);
 void flag_l(options_t *options, char *argv);
 void put_total_l(char *path, file_t *files);

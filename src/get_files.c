@@ -58,11 +58,16 @@ static file_t *check_one_file(char *path, bool get_allfiles)
 {
     char *name = NULL;
     int i = my_strlen(path);
+    file_t *file;
 
     for (; path != NULL && i >= 0 && path[i] != '/'; i--);
     name = path + i + 1;
     path[i] = '\0';
-    return fill_file(path, name, NULL, get_allfiles);
+    file = fill_file(path, name, NULL, get_allfiles);
+    path[i] = '/';
+    free(file->name);
+    file->name = my_strdup(path);
+    return check_permissions(file);
 }
 
 file_t *get_files(char *path, options_t *options)
