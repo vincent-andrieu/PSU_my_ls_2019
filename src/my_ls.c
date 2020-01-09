@@ -32,7 +32,7 @@ void do_flags(options_t *options, char **argv, int argc, bool multi_files)
     }
     if (options->ur)
         flag_ur(options, argv);
-    else if (options->l)
+    else if (options->i)
         flag_l(options, argv[options->r ? argc : 0]);
     else
         basic_ls(options, argv[options->r ? argc : 0]);
