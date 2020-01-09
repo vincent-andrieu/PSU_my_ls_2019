@@ -7,6 +7,7 @@
 
 #include <time.h>
 #include <sys/types.h>
+#include <sys/sysmacros.h>
 #include <pwd.h>
 #include <grp.h>
 #include "my.h"
@@ -67,6 +68,14 @@ static void put_month(struct stat st)
     my_putchar(' ');
 }
 
+static void put_major(struct stat st)
+{
+    if (S_ISBLK(st.st_mode) || S_ISCHR(st.st_mode)) {
+        my_put_nbr(major(st.st_rdev));
+        my_putstr(", ");
+    }
+}
+
 void put_details(file_t *files, int sp_nlinks, int sp_size)
 {
     my_putchar(get_file_type(files->st));
@@ -79,26 +88,12 @@ void put_details(file_t *files, int sp_nlinks, int sp_size)
     my_putchar(' ');
     my_putstr(getgrgid(files->st.st_gid)->gr_name);
     my_putchar(' ');
+    put_major(files->st);
     for (int i = 0; i < sp_size - get_num_nbr(files->st.st_size); i++)
         my_putchar(' ');
     my_put_nbr(files->st.st_size);
     my_putchar(' ');
     put_month(files->st);
     my_putstr(files->name);
-    my_putchar('\n');
-}
-
-void put_total_l(char *path, file_t *files)
-{
-    int total = 0;
-    struct stat st;
-
-    lstat(path, &st);
-    if (!S_ISDIR(st.st_mode))
-        return;
-    for (; files != NULL; files = files->next)
-        total += files->st.st_blocks / 2;
-    my_putstr("total ");
-    my_put_nbr(total);
     my_putchar('\n');
 }

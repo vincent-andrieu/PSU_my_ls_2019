@@ -41,6 +41,21 @@ static int get_sp_size(file_t *files)
     return spaces;
 }
 
+void put_total_l(char *path, file_t *files)
+{
+    int total = 0;
+    struct stat st;
+
+    lstat(path, &st);
+    if (!S_ISDIR(st.st_mode))
+        return;
+    for (; files != NULL; files = files->next)
+        total += files->st.st_blocks / 2;
+    my_putstr("total ");
+    my_put_nbr(total);
+    my_putchar('\n');
+}
+
 void flag_l(options_t *options, char *argv)
 {
     char *path = my_strdup(argv);
