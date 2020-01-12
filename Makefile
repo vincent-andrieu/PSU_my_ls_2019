@@ -22,7 +22,7 @@ NAME    =   my_ls
 CFLAGS  +=  -I include -Wall -Wextra -g
 LDFLAGS +=  -L lib/my -lmy
 
-TEST = @gcc -o unit_tests src/my_ls.c src/get_flags.c src/get_files.c src/sort_files.c src/flags.c src/flag_l/flag_l.c src/flag_l/put_flag_l.c tests/tests_my_ls.c $(LDFLAGS) $(CFLAGS) --coverage -lcriterion
+TEST = @gcc -o unit_tests src/my_ls.c src/get_flags.c src/get_files.c src/sort_files.c src/flags.c src/flag_l/flag_l.c src/flag_l/put_flag_l.c src/permissions.c tests/tests_my_ls.c $(LDFLAGS) $(CFLAGS) --coverage -lcriterion
 
 all:    $(NAME)
 
